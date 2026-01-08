@@ -156,36 +156,36 @@
         .mobile-menu-item:nth-child(7) { animation-delay: 0.4s; }
         .mobile-menu-item:nth-child(8) { animation-delay: 0.45s; }
 
-        /* Логотип - архитектурная колонна */
+        /* ИЗМЕНЕННЫЙ ЛОГОТИП - Банк с долларом */
         .logo-column {
-            width: 32px;
+            width: 40px;
             height: 40px;
             position: relative;
-            background: linear-gradient(135deg, #1A3C6E 0%, #2C5282 100%);
-            border-radius: 4px;
-            overflow: hidden;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .logo-column::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
-            border-radius: 4px 4px 0 0;
+        .logo-column i {
+            font-size: 20px;
         }
 
-        .logo-column::after {
-            content: '';
+        .logo-column .fa-university {
+            color: #1A3C6E; /* Темно-синий для банка */
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
-            border-radius: 0 0 4px 4px;
+            font-size: 22px;
+        }
+
+        .logo-column .fa-dollar-sign {
+            color: #00A388; /* Зеленый для доллара */
+            font-size: 14px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
         }
 
         /* Стили для таблицы сравнения */
@@ -274,7 +274,10 @@
             <div class="flex justify-between items-center h-20 py-4">
                 <!-- Логотип -->
                 <div class="flex items-center gap-3 flex-shrink-0">
-                    <div class="logo-column"></div>
+                    <div class="logo-column">
+                        <i class="fas fa-university"></i>
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
                     <div class="hidden sm:block leading-tight">
                         <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
                         <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
@@ -319,7 +322,10 @@
             <div class="max-w-md mx-auto">
                 <div class="mb-8">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="logo-column"></div>
+                        <div class="logo-column">
+                            <i class="fas fa-university"></i>
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
                         <div class="leading-tight">
                             <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
                             <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
@@ -702,7 +708,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="space-y-4">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="logo-column"></div>
+                        <div class="logo-column">
+                            <i class="fas fa-university"></i>
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
                         <div class="leading-tight">
                             <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
                             <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
