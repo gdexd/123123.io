@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Академия Банкротства - Франшиза с 0 ₽</title>
+    <meta name="description" content="Бизнес по банкротству физических лиц с доходом от 300 000 ₽ в месяц. Без паушального взноса.">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1A3C6E',
+                            gray: '#5A6B7C',
+                            green: '#00A388',
+                            greenLight: '#2ECC71',
+                            bg: '#F7FAFC',
+                            red: '#E74C3C'
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'btn': '0 4px 14px 0 rgba(0, 163, 136, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F7FAFC;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .glass-table-container {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(95deg, #00A388 0%, #2ECC71 100%);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 163, 136, 0.25);
+        }
+        .btn-gradient:hover {
+            filter: brightness(105%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 163, 136, 0.35);
+        }
+
+        .bg-overlay-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center top;
+            filter: grayscale(30%);
+        }
+        
+        .bg-overlay-light {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, rgba(247, 250, 252, 0.85) 0%, rgba(247, 250, 252, 0.95) 100%);
+        }
+
+        /* Анимации для появления элементов */
+        .js-scroll-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .js-scroll-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Задержки для последовательного появления */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+
+        /* Анимация пульсации для таймера */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Анимация для мобильного меню */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-menu-item {
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+        .mobile-menu-item:nth-child(5) { animation-delay: 0.3s; }
+        .mobile-menu-item:nth-child(6) { animation-delay: 0.35s; }
+        .mobile-menu-item:nth-child(7) { animation-delay: 0.4s; }
+        .mobile-menu-item:nth-child(8) { animation-delay: 0.45s; }
+
+        /* Логотип - архитектурная колонна */
+        .logo-column {
+            width: 32px;
+            height: 40px;
+            position: relative;
+            background: linear-gradient(135deg, #1A3C6E 0%, #2C5282 100%);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .logo-column::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .logo-column::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* Стили для таблицы сравнения */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: rgba(26, 60, 110, 0.05);
+            font-weight: 600;
+            color: #1A3C6E;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 163, 136, 0.03);
+        }
+
+        /* Анимация для кнопки бургера */
+        .burger-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #1A3C6E;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger-btn span:nth-child(2) {
+            margin: 5px 0;
+        }
+
+        .burger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .burger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Стили для мобильного меню */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 40;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu-content {
+            padding-top: 100px;
+            padding-bottom: 40px;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <div class="bg-overlay-container"></div>
+    <div class="bg-overlay-light"></div>
+
+    <!-- ШАПКА -->
+    <header class="fixed w-full top-0 z-50 glass-header transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 py-4">
+                <!-- Логотип -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <div class="logo-column"></div>
+                    <div class="hidden sm:block leading-tight">
+                        <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
+                        <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
+                    </div>
+                    <div class="sm:hidden leading-tight">
+                        <div class="text-brand-dark font-bold text-base uppercase tracking-tight">АКАДЕМИЯ</div>
+                        <div class="text-gray-600 text-xs font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
+                    </div>
+                </div>
+
+                <!-- Десктопное меню -->
+                <nav class="hidden lg:flex space-x-10 text-[15px] font-medium text-gray-600">
+                    <a href="#why" class="hover:text-brand-green transition-colors">О франшизе</a>
+                    <a href="#bankruptcy-why" class="hover:text-brand-green transition-colors">Почему банкротство</a>
+                    <a href="#for-whom" class="hover:text-brand-green transition-colors">Для кого</a>
+                    <a href="#comparison" class="hover:text-brand-green transition-colors">Сравнение</a>
+                    <a href="#contact" class="hover:text-brand-green transition-colors">Контакты</a>
+                </nav>
+
+                <!-- Кнопка CTA для десктопа -->
+                <div class="hidden lg:block">
+                    <button onclick="openModal()" class="btn-gradient px-7 py-3 rounded-md shadow-btn text-[15px] font-medium">
+                        Зафиксировать 0 ₽
+                    </button>
+                </div>
+
+                <!-- Бургер-кнопка для мобильных -->
+                <div class="lg:hidden flex items-center">
+                    <button id="burger-btn" class="burger-btn p-2 focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content px-4">
+            <div class="max-w-md mx-auto">
+                <div class="mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="logo-column"></div>
+                        <div class="leading-tight">
+                            <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
+                            <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav class="space-y-1">
+                    <a href="#why" class="mobile-menu-item block px-4 py-4 text-lg font-medium text-brand-dark hover:bg-gray-50 rounded-lg transition">О франшизе</a>
+                    <a href="#bankruptcy-why" class="mobile-menu-item block px-4 py-4 text-lg font-medium text-brand-dark hover:bg-gray-50 rounded-lg transition">Почему банкротство</a>
+                    <a href="#for-whom" class="mobile-menu-item block px-4 py-4 text-lg font-medium text-brand-dark hover:bg-gray-50 rounded-lg transition">Для кого</a>
+                    <a href="#comparison" class="mobile-menu-item block px-4 py-4 text-lg font-medium text-brand-dark hover:bg-gray-50 rounded-lg transition">Сравнение</a>
+                    <a href="#contact" class="mobile-menu-item block px-4 py-4 text-lg font-medium text-brand-dark hover:bg-gray-50 rounded-lg transition">Контакты</a>
+                    <button onclick="openModal()" class="mobile-menu-item w-full mt-4 btn-gradient px-4 py-4 rounded-lg text-lg font-medium shadow-btn">
+                        Зафиксировать 0 ₽
+                    </button>
+                </nav>
+                
+                <div class="mt-12 pt-8 border-t border-gray-200">
+                    <div class="text-sm text-gray-500">
+                        <p class="mb-2">Москва-Сити, Пресненская наб., 12</p>
+                        <a href="tel:88005059488" class="block text-lg font-bold text-brand-dark mb-1">8 800 505 94 88</a>
+                        <a href="mailto:info@akban.ru" class="text-brand-green hover:underline">info@akban.ru</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-24">
+        <!-- БЛОК 1: ГЛАВНЫЙ ЭКРАН -->
+        <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 relative z-10">
+            <div class="max-w-3xl js-scroll-hidden">
+                <h1 class="text-[34px] sm:text-5xl lg:text-[64px] font-normal text-brand-dark leading-[1.15] mb-6">
+                    Бизнес по банкротству <br>
+                    <span class="font-medium">физических лиц</span>
+                </h1>
+                <p class="text-xl sm:text-3xl lg:text-4xl text-gray-600 mb-10 font-light">
+                    с доходом от <span class="font-semibold text-brand-dark whitespace-nowrap">300 000 ₽</span> в месяц
+                </p>
+
+                <div class="prose prose-lg text-brand-gray mb-12 max-w-2xl text-base sm:text-lg leading-relaxed font-light">
+                    <p>Без паушального взноса и без юридического опыта. По системе, в которой мы зарабатываем только тогда, когда зарабатываете вы.</p>
+                </div>
+
+                <!-- Ключевые факты -->
+                <div class="mb-10 space-y-4 js-scroll-hidden delay-100">
+                    <div class="flex items-center gap-3 text-brand-gray">
+                        <svg class="w-5 h-5 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span class="text-lg font-light">Паушальный взнос — 0 ₽ до конца месяца</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-brand-gray">
+                        <svg class="w-5 h-5 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span class="text-lg font-light">Клиенты, юристы и бизнес-система включены</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-brand-gray">
+                        <svg class="w-5 h-5 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span class="text-lg font-light">Работаем с 2014 года</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-brand-gray">
+                        <svg class="w-5 h-5 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span class="text-lg font-light">Более 40 офисов по стране</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 mb-8 js-scroll-hidden delay-200">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-center sm:text-left">
+                            <p class="text-brand-gray text-sm mb-1">До окончания условий с 0 ₽ осталось:</p>
+                            <div id="countdown-timer" class="font-mono font-bold text-3xl text-brand-dark">09:12:45</div>
+                        </div>
+                        <div class="text-center sm:text-right">
+                            <p class="text-xs text-brand-gray">Торопитесь! Количество мест ограничено</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8">
+                    <button onclick="openModal()" class="btn-gradient w-full sm:w-auto px-10 py-4 sm:py-[18px] rounded-lg shadow-btn text-lg sm:text-xl font-medium text-center transition-transform hover:-translate-y-1">
+                        Зафиксировать условия 0 ₽
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 2: ПОЧЕМУ БЕЗ ПАУШАЛЬНОГО ВЗНОСА -->
+        <section id="why" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+            <h2 class="text-[28px] sm:text-4xl lg:text-5xl font-light text-brand-dark mb-12 lg:mb-16 leading-tight js-scroll-hidden">
+                Почему вход в бизнес — <br class="sm:hidden"> <span class="font-medium">без паушального взноса</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12">
+                <div class="glass-card p-8 flex flex-col items-center text-center js-scroll-hidden delay-100">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center bg-brand-green/10 rounded-2xl text-brand-green">
+                        <i class="fas fa-hand-holding-usd text-3xl"></i>
+                    </div>
+                    <h3 class="font-medium text-xl mb-3 text-brand-dark">Вы не платите за «право попробовать»</h3>
+                    <p class="text-brand-gray leading-relaxed">Большинство франшиз зарабатывают на продаже франшизы. Мы зарабатываем на результатах партнёров.</p>
+                </div>
+
+                <div class="glass-card p-8 flex flex-col items-center text-center js-scroll-hidden delay-200">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center bg-brand-green/10 rounded-2xl text-brand-green">
+                        <i class="fas fa-chart-line text-3xl"></i>
+                    </div>
+                    <h3 class="font-medium text-xl mb-3 text-brand-dark">Мы финансово заинтересованы в вашем доходе</h3>
+                    <p class="text-brand-gray leading-relaxed">Наша прибыль напрямую зависит от вашего успеха. Мы делаем всё, чтобы вы зарабатывали больше.</p>
+                </div>
+
+                <div class="glass-card p-8 flex flex-col items-center text-center js-scroll-hidden delay-300">
+                    <div class="w-16 h-16 mb-6 flex items-center justify-center bg-brand-green/10 rounded-2xl text-brand-green font-bold text-3xl">
+                        X=
+                    </div>
+                    <h3 class="font-medium text-xl mb-3 text-brand-dark">Если бизнес не зарабатывает — мы тоже не зарабатываем</h3>
+                    <p class="text-brand-gray leading-relaxed">Это настоящая партнерская модель. Мы разделяем с вами и риски, и успехи.</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-[15px] sm:text-base text-brand-gray font-light js-scroll-hidden delay-400">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-brand-green flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                    <span><strong>Это не маркетинговая акция.</strong> Это стратегия масштабирования сети и отбора сильных партнёров.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 3: ПОЧЕМУ БАНКРОТСТВО -->
+        <section id="bankruptcy-why" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+            <div class="glass-card p-8 sm:p-10 js-scroll-hidden">
+                <h2 class="text-[28px] sm:text-4xl lg:text-5xl font-light text-brand-dark mb-8 leading-tight">
+                    Почему банкротство — <span class="font-medium">выгодный бизнес</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Растущий рынок</h3>
+                                <p class="text-brand-gray">С каждым годом количество граждан, нуждающихся в процедуре банкротства, только увеличивается. Это устойчивый спрос независимо от экономической ситуации.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-shield-alt text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Полная легальность</h3>
+                                <p class="text-brand-gray">Процедура банкротства физических лиц полностью урегулирована законодательством РФ. Вы оказываете официальные услуги с прозрачной документацией.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-users text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Социальная значимость</h3>
+                                <p class="text-brand-gray">Вы помогаете людям решать сложные жизненные ситуации, возвращаете им финансовую свободу и возможность начать всё с чистого листа.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-money-bill-wave text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Высокий средний чек</h3>
+                                <p class="text-brand-gray">Стоимость комплексного сопровождения банкротства физического лица начинается от 120 000 ₽ и достигает 500 000 ₽ в сложных случаях.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-repeat text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Повторные обращения</h3>
+                                <p class="text-brand-gray">Довольные клиенты рекомендуют вас знакомым и родственникам, создавая постоянный поток новых клиентов без дополнительных затрат на рекламу.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-briefcase text-brand-green text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-xl text-brand-dark mb-3">Масштабируемость</h3>
+                                <p class="text-brand-gray">Начав с одного офиса, вы можете открывать филиалы в других городах, создавая федеральную сеть под руководством нашей компании.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 p-6 bg-gradient-to-r from-brand-green/5 to-brand-green/10 rounded-xl border border-brand-green/20">
+                    <p class="text-brand-dark text-lg font-medium">
+                        <i class="fas fa-lightbulb text-brand-green mr-2"></i>
+                        Банкротство — это не временный тренд, а постоянно растущая ниша с высокой маржинальностью и социальной значимостью.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 4: ДЛЯ КОГО -->
+        <section id="for-whom" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+            <h2 class="text-[28px] sm:text-4xl lg:text-5xl font-light text-brand-dark mb-12 leading-tight js-scroll-hidden">
+                Для кого этот бизнес
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                <div class="glass-card p-8 sm:p-10 js-scroll-hidden delay-100 h-full">
+                    <h3 class="font-medium text-2xl mb-6 text-brand-dark flex items-center gap-3">
+                        <i class="fas fa-check-circle text-brand-green"></i>
+                        Для вас, если...
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-brand-green flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Ищете понятный и законный бизнес</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-brand-green flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Предпочитаете цифры, а не громкие обещания</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-brand-green flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Хотите стабильный спрос, а не временный тренд</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-brand-green flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Готовы управлять процессами, а не действовать наугад</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 sm:p-10 js-scroll-hidden delay-200 h-full">
+                    <h3 class="font-medium text-2xl mb-6 text-brand-dark flex items-center gap-3">
+                        <i class="fas fa-times-circle text-brand-red"></i>
+                        Не подходит, если...
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Ищете полностью пассивный доход</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Не готовы общаться с клиентами</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Не хотите работать по выстроенной системе</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <svg class="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <span class="text-brand-gray text-lg font-light">Ждете мгновенных результатов без усилий</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- БЛОК 5: СРАВНЕНИЕ С ДРУГИМИ -->
+        <section id="comparison" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+            <h2 class="text-[28px] sm:text-4xl lg:text-5xl font-light text-brand-dark mb-12 leading-tight js-scroll-hidden">
+                Сравнение с другими франшизами
+            </h2>
+            
+            <div class="glass-table-container overflow-hidden js-scroll-hidden delay-100 shadow-glass mb-12">
+                <div class="overflow-x-auto">
+                    <table class="comparison-table min-w-full">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-5 font-normal text-base w-1/2 pl-8 text-left">Критерий</th>
+                                <th class="px-6 py-5 font-medium text-brand-dark w-1/4 text-center text-lg">Мы</th>
+                                <th class="px-6 py-5 font-normal text-gray-600 w-1/4 text-center text-lg">Другие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-6 py-5 text-gray-700 font-medium pl-8">Паушальный взнос</td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </td>
+                            </tr>
+                            <tr class="bg-gray-50/50">
+                                <td class="px-6 py-5 text-gray-700 font-medium pl-8">Клиенты</td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-5 text-gray-700 font-medium pl-8">Поддержка</td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </td>
+                                <td class="px-6 py-5 text-center text-gray-500">Частично</td>
+                            </tr>
+                            <tr class="bg-gray-50/50">
+                                <td class="px-6 py-5 text-gray-700 font-medium pl-8">Заинтересованность в доходе</td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </td>
+                                <td class="px-6 py-5 text-center">
+                                    <svg class="w-6 h-6 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center js-scroll-hidden delay-200">
+                <button onclick="openModal()" class="btn-gradient px-10 py-4 rounded-lg shadow-btn text-lg font-medium inline-block transition-transform hover:-translate-y-1">
+                    Зафиксировать 0 ₽
+                </button>
+            </div>
+        </section>
+
+        <!-- БЛОК 6: ФОРМА -->
+        <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10">
+            <div class="max-w-4xl mx-auto glass-card p-8 sm:p-12 relative overflow-hidden js-scroll-hidden shadow-2xl">
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-green to-brand-greenLight"></div>
+                
+                <div class="text-center mb-10">
+                     <h2 class="text-3xl sm:text-4xl font-medium text-brand-dark mb-4">Начните свой бизнес</h2>
+                     <p class="text-brand-gray text-lg font-light max-w-2xl mx-auto">Оставьте заявку, чтобы получить полную презентацию франшизы, финансовую модель и зафиксировать условия.</p>
+                </div>
+
+                <form id="contactForm" class="space-y-6 max-w-2xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-brand-dark mb-2 ml-1">Ваше имя *</label>
+                            <input type="text" name="name" id="name" required placeholder="Иван Иванов" 
+                            class="w-full px-5 py-4 rounded-xl bg-white/60 border-2 border-transparent focus:border-brand-green/50 focus:bg-white/80 outline-none transition-all backdrop-blur-md placeholder-gray-400 text-brand-dark shadow-sm">
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-brand-dark mb-2 ml-1">Номер телефона *</label>
+                            <input type="tel" name="phone" id="phone" required placeholder="+7 (999) 000-00-00" 
+                            class="w-full px-5 py-4 rounded-xl bg-white/60 border-2 border-transparent focus:border-brand-green/50 focus:bg-white/80 outline-none transition-all backdrop-blur-md placeholder-gray-400 text-brand-dark shadow-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-brand-dark mb-2 ml-1">Комментарий (необязательно)</label>
+                        <textarea name="message" id="message" rows="3" placeholder="Например: Удобное время для звонка..." 
+                        class="w-full px-5 py-4 rounded-xl bg-white/60 border-2 border-transparent focus:border-brand-green/50 focus:bg-white/80 outline-none transition-all backdrop-blur-md placeholder-gray-400 text-brand-dark shadow-sm resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" id="submitBtn" class="w-full btn-gradient py-5 rounded-xl text-xl font-medium shadow-btn hover:shadow-lg transition-all">
+                            Получить материалы и зафиксировать 0 ₽
+                        </button>
+                    </div>
+                    
+                    <p id="formStatus" class="text-center text-base mt-4 hidden font-medium"></p>
+                    
+                    <p class="text-xs text-center text-gray-400 mt-6 leading-relaxed">
+                        Нажимая кнопку, вы даете согласие на обработку своих персональных данных в соответствии с <a href="#" class="underline hover:text-brand-green">политикой конфиденциальности</a>.
+                    </p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- ФУТЕР -->
+    <footer class="glass-header border-t border-white/40 mt-auto relative z-20">
+        <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="logo-column"></div>
+                        <div class="leading-tight">
+                            <div class="text-brand-dark font-bold text-lg uppercase tracking-tight">АКАДЕМИЯ</div>
+                            <div class="text-gray-600 text-sm font-medium uppercase tracking-wide">БАНКРОТСТВА</div>
+                        </div>
+                    </div>
+                    <p class="text-brand-gray text-sm">Юридический центр «Академия Банкротства»</p>
+                    <p class="text-brand-gray text-sm">Москва-Сити, Пресненская наб., 12, Башня «Федерация»</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-medium text-brand-dark">Контакты</h4>
+                    <div class="space-y-2">
+                        <a href="tel:88005059488" class="block text-lg font-bold text-brand-dark hover:text-brand-green transition">8 800 505 94 88</a>
+                        <a href="mailto:info@akban.ru" class="block text-brand-gray hover:text-brand-green transition">info@akban.ru</a>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-brand-green hover:text-white transition-all">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-brand-green hover:text-white transition-all">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-brand-green hover:text-white transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-medium text-brand-dark">Документы</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-brand-gray hover:text-brand-green transition text-sm">Договор оферты</a>
+                        <a href="#" class="block text-brand-gray hover:text-brand-green transition text-sm">Политика конфиденциальности</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-8 pt-6 text-center">
+                <p class="text-gray-400 text-sm">© 2026 Академия Банкротства. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="glass-card max-w-md w-full p-8 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <h3 class="text-2xl font-medium text-brand-dark mb-6 text-center">Оставить заявку</h3>
+            
+            <form id="modalForm" class="space-y-4">
+                <div>
+                    <input type="text" placeholder="Ваше имя" required 
+                    class="w-full px-4 py-3 rounded-lg bg-white/60 border border-gray-300 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition">
+                </div>
+                <div>
+                    <input type="tel" placeholder="Номер телефона" required 
+                    class="w-full px-4 py-3 rounded-lg bg-white/60 border border-gray-300 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition">
+                </div>
+                <div>
+                    <input type="email" placeholder="Email" 
+                    class="w-full px-4 py-3 rounded-lg bg-white/60 border border-gray-300 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition">
+                </div>
+                <button type="submit" class="w-full btn-gradient py-3 rounded-lg font-medium">
+                    Отправить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Таймер обратного отсчета
+            startTimer('countdown-timer', 9, 12, 45);
+            
+            // Анимации при скролле
+            initScrollAnimations();
+            
+            // Инициализация бургер-меню
+            initBurgerMenu();
+            
+            // Инициализация модального окна
+            initModal();
+            
+            // Инициализация форм
+            initForms();
+        });
+
+        // Таймер обратного отсчета
+        function startTimer(displayId, initialHours = 9, initialMinutes = 12, initialSeconds = 45) {
+            const display = document.getElementById(displayId);
+            if (!display) return;
+            
+            let totalSeconds = initialHours * 3600 + initialMinutes * 60 + initialSeconds;
+            
+            function updateTimer() {
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                display.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    
+                    // Эффект пульсации в последние 10 минут
+                    if (totalSeconds <= 600) {
+                        display.classList.add('animate-pulse');
+                        display.style.color = '#E74C3C';
+                    }
+                } else {
+                    clearInterval(timerInterval);
+                    display.textContent = '00:00:00';
+                    display.style.color = '#E74C3C';
+                }
+            }
+            
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Анимации при скролле
+        function initScrollAnimations() {
+            const scrollElements = document.querySelectorAll('.js-scroll-hidden');
+            if (!scrollElements.length) return;
+            
+            const observerOptions = {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('js-scroll-visible');
+                        scrollObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            scrollElements.forEach((el) => {
+                scrollObserver.observe(el);
+            });
+        }
+
+        // Бургер-меню
+        function initBurgerMenu() {
+            const burgerBtn = document.getElementById('burger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (!burgerBtn || !mobileMenu) return;
+            
+            burgerBtn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Закрытие меню при клике на ссылку
+            const mobileLinks = mobileMenu.querySelectorAll('a, button');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    burgerBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // Закрытие меню при ресайзе окна
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) {
+                    burgerBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Модальное окно
+        function initModal() {
+            const modal = document.getElementById('modal');
+            if (!modal) return;
+            
+            // Открытие модального окна
+            window.openModal = function() {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            };
+            
+            // Закрытие модального окна
+            window.closeModal = function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+            
+            // Закрытие по клику вне модального окна
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // Закрытие по клавише Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Обработка форм
+        function initForms() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    
+                    // Имитация отправки
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Отправка...';
+                    
+                    setTimeout(() => {
+                        alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                        this.reset();
+                        closeModal();
+                    }, 1500);
+                });
+            });
+        }
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрытие мобильного меню после клика
+                    const burgerBtn = document.getElementById('burger-btn');
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (burgerBtn && mobileMenu && mobileMenu.classList.contains('active')) {
+                        burgerBtn.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
